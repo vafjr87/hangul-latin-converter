@@ -1,70 +1,78 @@
-import korean.hangul as kr
-import sys
-import pickle
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
-class romanizator(object):
+# Terminology: 
+
+# 자음 or jaeum:    consonant
+# 모음 or moeum:    vowel
+# 밭침 or batchim:  final letter 
+# 음절 or eumjeol:  block or syllable 
+
+import korean.hangul as kr
+import serialization as s
+import sys
+import os
+
+class Romanizator(object):
 
     def __init__(self):
-        print('Welcome to the Hangul->Latin Script Conversor 0.9\n')
-        self.input = self.get_input()
-        self.hangul = pickle.load(open('./hangul.dat', "rb"))
         self.output = ''
+        self.input = self.get_input()
+        self.hangul = s.deserialize('data', 'hangul')
+        print('Welcome to the Hangul->Latin Script Converter 0.9\n')
 
     def get_input(self):
         print('Please insert the korean text and press CTRL + D:\n')
 
         return sys.stdin.read().split('\n')
 
-    def romanize(self):
+    def jaeum(self, letter):
+        return self.hangul['jaeum'].get(letter)
 
-        romanized_output = list()
+    def moeum(self, letter):
+        return self.hangul['moeum'].get(letter)
+
+    def batchim(self, letter, inicial_next=''):
+        if letter == '':
+            return ''
+
+        return self.hangul['batchim'].get(letter)
+
+    def romanize(self):
+        output_romanized = list()
 
         for sentence in self.input:
-            romanized_sentence = ''
-            upper = True
 
-            blocks = list(sentence)
+            sentence_latin = ''
+            syllables = list(sentence)
 
-            for block in blocks:
-                if kr.is_hangul(block):
-                    letters = kr.split_char(block)
-                    
-                    for i in range(len(letters)):
-                        if i == (len(letters) - 1): # If it's batchim
-                            if letters[i] != '' and letters[i] in self.hangul['batchim']:
-                                romanized_sentence = romanized_sentence + self.hangul['batchim'][letters[i]]
-                        else:
-                            if upper:
-                                if len(self.hangul['letters'][letters[i]]) > 1:
-                                    romanized_sentence += str.upper(self.hangul['letters'][letters[i]][0]) + \
-                                                                    self.hangul['letters'][letters[i]][1:]
-                                else:
-                                    romanized_sentence += str.upper(self.hangul['letters'][letters[i]])
-                                
-                                if romanized_sentence != '':
-                                    upper = False
-                            else:
-                                romanized_sentence += self.hangul['letters'][letters[i]]
+            for i, syllable in enumerate(syllables):
 
+                if kr.is_hangul(syllable):
+                    sentence_latin += self.jaeum(kr.get_initial(syllable))
+                    sentence_latin += self.moeum(kr.get_vowel(syllable))
+                    sentence_latin += self.batchim(kr.get_final(syllable))
                 else:
-                    if block in '.!?':
-                        upper = True
-                    else:
-                        upper = False
+                    sentence_latin += syllable
 
-                    romanized_sentence += block
+            sentence_latin = sentence_latin.strip()
 
-            romanized_output.append(romanized_sentence.strip())
 
-        self.output = romanized_output
+            if len(sentence_latin) and not sentence_latin[0].isupper():
+                sentence_latin = sentence_latin.capitalize()
+            
+            output_romanized.append(sentence_latin)
+
+        self.output = output_romanized
+
 
     def print_output(self):
-        print('\nRomanized version:\n')
+        print('\n☯  Romanized version ☯\n')
 
         for line in self.output:
             print(line)
 
-
-r = romanizator()
-r.romanize()
-r.print_output()
+if __name__ == "__main__":
+    r = Romanizator()
+    r.romanize()
+    r.print_output()
