@@ -11,17 +11,18 @@
 import korean.hangul as kr
 import serialization as s
 import sys
-import os
 
 class Romanizator(object):
 
     def __init__(self):
         self.output = ''
-        self.input = self.get_input()
+        self.input = self.get_input(True)
         self.hangul = s.deserialize('data', 'hangul')
-        print('Welcome to the Hangul->Latin Script Converter 0.9\n')
 
-    def get_input(self):
+    def get_input(self, welcome=False):
+        if welcome:
+            print('Welcome to the Hangul->Latin Script Converter 0.9\n')
+
         print('Please insert the korean text and press CTRL + D:\n')
 
         return sys.stdin.read().split('\n')
