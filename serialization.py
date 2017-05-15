@@ -6,18 +6,21 @@ import sys
 import os
 
 def directory_fix_path(directory):
+    """Standardize a directory path"""
     if not directory.endswith('/'):
             directory += '/'
 
     return directory
 
 def file_fix_extension(file_name):
+    """Standardize the serialization file name"""
     if not file_name.endswith('.p'):
             file_name += '.p'
 
     return file_name
 
 def serialize(directory, file_name, data, overwrite=False):
+    """Serialize the Hangul dictionary"""
     directory = directory_fix_path(directory)
     file_name = file_fix_extension(file_name)
 
@@ -27,6 +30,7 @@ def serialize(directory, file_name, data, overwrite=False):
         file_s.close()
 
 def deserialize(directory, file_name, kr=False):
+    """Deserialize the Hangul dictionary"""
     directory = directory_fix_path(directory)
     file_name = file_fix_extension(file_name)
     
@@ -40,85 +44,86 @@ def deserialize(directory, file_name, kr=False):
     return hangul
 
 def run(directory, file_name, kr=False, overwrite=False):
-    자음 = {
+    """To run the serialization function from terminal"""
+    자음 = { 
         'ㄱ' : 'g',
+        'ㄲ' : 'kk',
         'ㄴ' : 'n',
         'ㄷ' : 'd',
+        'ㄸ' : 'tt',
         'ㄹ' : 'r',
+        'ㄹㄹ': 'l',
         'ㅁ' : 'm',
         'ㅂ' : 'b',
+        'ㅃ' : 'pp',
         'ㅅ' : 's',
+        'ㅆ' : 'ss',
         'ㅇ' : '',
         'ㅈ' : 'j',
+        'ㅉ' : 'jj',
         'ㅊ' : 'ch',
         'ㅋ' : 'k',
         'ㅌ' : 't',
         'ㅍ' : 'p',
-        'ㅎ' : 'h',
-        'ㄲ' : 'kk',
-        'ㄸ' : 'tt',
-        'ㅃ' : 'pp',
-        'ㅆ' : 'ss',
-        'ㅉ' : 'jj',
+        'ㅎ' : 'h'
     }
-
     모음 = {
         'ㅏ' : 'a',
-        'ㅑ' : 'ya',
-        'ㅓ' : 'eo',
-        'ㅕ' : 'yeo',
-        'ㅗ' : 'o' ,
-        'ㅛ' : 'yo',
-        'ㅜ' : 'u',
-        'ㅠ' : 'yu', 
-        'ㅡ' : 'eu' ,
-        'ㅣ' : 'i',
         'ㅐ' : 'ae',
+        'ㅑ' : 'ya',
         'ㅒ' : 'yae',
+        'ㅓ' : 'eo',
         'ㅔ' : 'e',
+        'ㅕ' : 'yeo',
         'ㅖ' : 'ye',
+        'ㅗ' : 'o' ,
         'ㅘ' : 'wa',
         'ㅙ' : 'wae',
         'ㅚ' : 'oe' ,
+        'ㅛ' : 'yo',
+        'ㅜ' : 'u',
         'ㅝ' : 'wo',
-        'ㅟ' : 'wi',
         'ㅞ' : 'we',
-        'ㅢ' : 'ui'
+        'ㅟ' : 'wi',
+        'ㅠ' : 'yu', 
+        'ㅡ' : 'eu' ,
+        'ㅢ' : 'ui',
+        'ㅣ' : 'i'
     }
 
     받침 = {
         'ㄱ' : 'k',
+        'ㄲ' : 'k',
+        'ㄳ' : 'gs',
         'ㄴ' : 'n',
+        'ㄵ' : 'nch',
+        'ㄶ' : 'nh',
         'ㄷ' : 't',
         'ㄹ' : 'l',
+        'ㄺ' : 'lg',
+        'ㄻ' : 'lm',
+        'ㄼ' : 'lb',
+        'ㄽ' : 'ls',
+        'ㄾ' : 'lt',
+        'ㄿ' : 'lp',
+        'ㅀ' : 'lh',
         'ㅁ' : 'm',
         'ㅂ' : 'p',
+        'ㅄ' : 'ps',
         'ㅅ' : 't',
+        'ㅆ' : 't',
         'ㅇ' : 'ng',
         'ㅈ' : 't',
         'ㅊ' : 't',
         'ㅋ' : 'k',
         'ㅌ' : 't',
         'ㅍ' : 'p',
-        'ㅎ' : 't',
-        'ㄲ' : 'k',
-        'ㅆ' : 't',
-        'ㄳ' : 'g',
-        'ㄵ' : 'n',
-        'ㄶ' : 'n',
-        'ㄺ' : 'l',
-        'ㄻ' : 'lm',
-        'ㄼ' : 'lb',
-        'ㄽ' : 'ls',
-        'ㄾ' : 'lt',
-        'ㄿ' : 'lp',
-        'ㅀ' : 'l',
-        'ㅄ' : 'ps'
+        'ㅎ' : 't'
     }
 
     if kr:
         hangul = {'모음': 모음, '자음': 자음, '받침': 받침}
-        file_name = file_fix_extension(file_name + 'kr')
+        file_name = file_fix_extension(file_name + '_kr')
     else:
         hangul = {'moeum': 모음, 'jaeum': 자음, 'batchim': 받침}
         file_name = file_fix_extension(file_name)
