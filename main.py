@@ -1,32 +1,34 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from datetime import datetime as dt
-import fileinput as fi
-import romanizator as r
+import fileinput 
+import romanizator as hr
 
 
-def printline(string):
-    print(string.strip())
+# def printline(string):
+#     print(string.strip())
+
+def romanize(file):
+    hangul = hr.HangulRomanizator()
+
+    romanized = []
+    for line in file:
+        romanized.append(hangul.romanize(line))
+    else:
+        return romanized
+
+
+def print_text(text, label):
+    print(f'{label.upper()}:')
+
+    for line in text:
+        print(line.strip())
+    else:
+        print('\n')
 
 
 if __name__ == '__main__':
-    start = dt.now()
-
-    r = r.Romanizator()
-    romanized = []
-
-    print('--- Original Text ---\n')
-    for line in fi.input():
-        printline(line)
-        romanized.append(r.romanize(line))
-    print()
-
-    print('--- Romanized Text ---\n')
-    for line in romanized:
-        printline(line)
-    print()
-
-    end = dt.now()
-
-    print('Time running: {}\n'.format(end - start))
+    original = list(fileinput.input())
+    romanized = romanize(fileinput.input())
+    print_text(original, 'original')
+    print_text(romanized, 'romanized')

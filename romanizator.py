@@ -16,38 +16,45 @@
 
 from korean import hangul as kr
 
-class Romanizator(object):
+class HangulRomanizator(object):
     """Class for romanization from Hangul to Latin"""
     def __init__(self):
-        __jaeum = {
-            'ㄱ' : 'g', 'ㄲ' : 'kk', 'ㄴ' : 'n', 'ㄷ' : 'd', 'ㄸ' : 'tt', 'ㄹ' : 'r', 'ㄹㄹ': 'l',
-            'ㅁ' : 'm', 'ㅂ' : 'b', 'ㅃ' : 'pp', 'ㅅ' : 's', 'ㅆ' : 'ss', 'ㅇ' : '', 'ㅈ' : 'j',
-            'ㅉ' : 'jj', 'ㅊ' : 'ch', 'ㅋ' : 'k', 'ㅌ' : 't', 'ㅍ' : 'p', 'ㅎ' : 'h'
+        jaeum = {
+            'ㄱ': 'g', 'ㄲ': 'kk', 'ㄴ': 'n', 'ㄷ': 'd', 'ㄸ': 'tt', 'ㄹ': 'r',
+            'ㄹㄹ': 'l', 'ㅁ': 'm', 'ㅂ': 'b', 'ㅃ': 'pp', 'ㅅ': 's', 'ㅆ': 'ss',
+            'ㅇ': '', 'ㅈ': 'j', 'ㅉ': 'jj', 'ㅊ': 'ch', 'ㅋ': 'k', 'ㅌ': 't',
+            'ㅍ': 'p', 'ㅎ': 'h'
         }
 
-        __moeum = {
-            'ㅏ' : 'a', 'ㅐ' : 'ae', 'ㅑ' : 'ya', 'ㅒ' : 'yae', 'ㅓ' : 'eo', 'ㅔ' : 'e', 'ㅕ' : 'yeo',
-            'ㅖ' : 'ye', 'ㅗ' : 'o' , 'ㅘ' : 'wa', 'ㅙ' : 'wae', 'ㅚ' : 'oe' , 'ㅛ' : 'yo', 'ㅜ' : 'u',
-            'ㅝ' : 'wo', 'ㅞ' : 'we', 'ㅟ' : 'wi', 'ㅠ' : 'yu',  'ㅡ' : 'eu' , 'ㅢ' : 'ui', 'ㅣ' : 'i'
+        moeum = {
+            'ㅏ': 'a', 'ㅐ': 'ae', 'ㅑ': 'ya', 'ㅒ': 'yae', 'ㅓ': 'eo', 'ㅔ': 'e',
+            'ㅕ': 'yeo', 'ㅖ': 'ye', 'ㅗ': 'o' , 'ㅘ': 'wa', 'ㅙ': 'wae', 'ㅚ': 'oe',
+            'ㅛ': 'yo', 'ㅜ': 'u', 'ㅝ': 'wo', 'ㅞ': 'we', 'ㅟ': 'wi', 'ㅠ': 'yu',
+            'ㅡ': 'eu' , 'ㅢ': 'ui', 'ㅣ': 'i'
         }
 
-        __batchim = {
-            'ㄱ' : 'k', 'ㄲ' : 'k', 'ㄳ' : 'gs', 'ㄴ' : 'n', 'ㄵ' : 'nch', 'ㄶ' : 'nh', 'ㄷ' : 't',
-            'ㄹ' : 'l', 'ㄺ' : 'lg', 'ㄻ' : 'lm', 'ㄼ' : 'lb', 'ㄽ' : 'ls', 'ㄾ' : 'lt', 'ㄿ' : 'lp',
-            'ㅀ' : 'lh', 'ㅁ' : 'm', 'ㅂ' : 'p', 'ㅄ' : 'ps', 'ㅅ' : 't', 'ㅆ' : 't', 'ㅇ' : 'ng',
-            'ㅈ' : 't', 'ㅊ' : 't', 'ㅋ' : 'k', 'ㅌ' : 't', 'ㅍ' : 'p', 'ㅎ' : 't'
+        batchim = {
+            'ㄱ': 'k', 'ㄲ': 'k', 'ㄳ': 'gs', 'ㄴ': 'n', 'ㄵ': 'nch', 'ㄶ': 'nh',
+            'ㄷ': 't', 'ㄹ': 'l', 'ㄺ': 'lg', 'ㄻ': 'lm', 'ㄼ': 'lb', 'ㄽ': 'ls',
+            'ㄾ': 'lt', 'ㄿ': 'lp', 'ㅀ': 'lh', 'ㅁ': 'm', 'ㅂ': 'p', 'ㅄ': 'ps',
+            'ㅅ': 't', 'ㅆ': 't', 'ㅇ': 'ng', 'ㅈ': 't', 'ㅊ': 't', 'ㅋ': 'k',
+            'ㅌ': 't', 'ㅍ': 'p', 'ㅎ': 't'
         }
 
-        __ssangbatchim = {
+        ssangbatchim = {
             'ㄳ': ('ㄱ', 'ㅅ'),  'ㄵ': ('ㄴ', 'ㅈ'), 'ㄶ': ('ㄴ', 'ㅎ'), 'ㄺ': ('ㄹ', 'ㄱ'), 
             'ㄻ': ('ㄹ', 'ㅁ'), 'ㄼ': ('ㄹ', 'ㅂ'), 'ㄽ': ('ㄹ', 'ㅅ'), 'ㄾ': ('ㄹ', 'ㅌ'), 
             'ㄿ': ('ㄹ', 'ㅍ'), 'ㅀ': ('ㄹ', 'ㅎ'), 'ㅄ': ('ㅂ', 'ㅅ')
         }
 
         self.__hangul = {
-            'jaeum': __jaeum, 'moeum': __moeum, 'batchim': __batchim, 'ssangbatchim': __ssangbatchim
+            'jaeum': jaeum,
+            'moeum': moeum,
+            'batchim': batchim,
+            'ssangbatchim': ssangbatchim
         }
 
+        self.hangul = self.__hangul
 
     def __get_initial_next(self, syllables, i):
         """Get the initial letter of the next syllable of a word
@@ -57,7 +64,7 @@ class Romanizator(object):
         if i < (len(syllables) - 1):
             if syllables[i + 1] != '' and kr.is_hangul(syllables[i + 1]):
                 return kr.get_initial(syllables[i + 1])
-
+    
         return ''
 
 
@@ -72,17 +79,18 @@ class Romanizator(object):
 
         return ''
 
-    def is_ssangbatchim(self, batchim):
-        """True if param is double batchim
 
-        :param batchim: char; the final letter of a syllable"""
+    def is_ssangbatchim(self, batchim):
+        """Return True if the batchim is double batchim"""
+
+        # :param batchim: char; the final letter of a syllable
         return batchim in self.__hangul['ssangbatchim'].keys()
 
 
     def has_ssangbatchim(self, syllable):
-        """True if param contains a double batchim
+        """Return True if the syllable contains a double batchim"""
 
-        :param syllable: char; a syllable"""
+        # :param syllable: char; a syllable
         if kr.is_hangul(syllable):
             return self.is_ssangbatchim(kr.get_final(syllable))
         else:
@@ -90,9 +98,9 @@ class Romanizator(object):
 
 
     def split_ssangbatchim(self, char):
-        """Split the double in a tuple
+        """Split the double batchim in a tuple"""
 
-        :param char: char; the final letter of a syllable or a syllable"""
+        # :param char: char; the final letter of a syllable or a syllable
         if char in self.__hangul['ssangbatchim'].keys():
             return self.__hangul['ssangbatchim'].get(char)
         else:
@@ -100,10 +108,10 @@ class Romanizator(object):
 
 
     def jaeum(self, syllable, prior=''):
-        """Convert a consonant to latin script following grammatical rules
+        """Convert a consonant to latin script following grammatical rules"""
 
-        :param syllable: char; a hangul syllable
-        :param prior: char; the final consonant of the prior syllable, if it exists"""
+       # :param syllable: char; a hangul syllable
+       # :param prior: char; the final consonant of the prior syllable, if it exists
 
         if syllable in self.__hangul['jaeum'].keys():
             current = syllable
@@ -129,19 +137,19 @@ class Romanizator(object):
 
 
     def moeum(self, syllable):
-        """Convert a vowel to latin script
+        """Convert a vowel to latin script"""
 
-        :param syllable: char; a hangul syllable"""
+       # :param syllable: char; a hangul syllable
         if syllable in self.__hangul['moeum'].keys():
             return self.__hangul['moeum'].get(syllable)
         else:
             return self.__hangul['moeum'].get(kr.get_vowel(syllable))
 
     def batchim(self, syllable, next=''):
-        """Convert a final consonant to latin script following grammatical rules
+        """Convert a final consonant to latin script following grammatical rules"""
 
-        :param syllable: char; a hangul syllable
-        :param prior: char; the initial consonant of the next syllable, if it exists"""
+       # :param syllable: char; a hangul syllable
+       # :param prior: char; the initial consonant of the next syllable, if it exists
 
         current = kr.get_final(syllable)
 
@@ -181,7 +189,7 @@ class Romanizator(object):
 
 
     def has_hangul(self, string):
-        """Return True if there is any hangul char in the string"""
+        """Return True if there is any hangul character in the text"""
         syllables = list(string)
 
         for syllable in syllables:
@@ -192,9 +200,9 @@ class Romanizator(object):
 
 
     def romanize(self, string):
-        """Convert a string from Hangul to Latin Script
+        """Convert a string from Hangul to Latin Script"""
 
-        :param string: string; any sentence, romanize if hangul else return the same text"""
+       # :param string: string; any sentence, romanize if hangul else return the same text
         if not self.has_hangul(string):
             return string
 
@@ -218,38 +226,101 @@ class Romanizator(object):
 
         return sentence_latin
 
+def call_method_test(method, str_input, expected_output = None):
+    """Tests a method calling from HangulRomanizator class"""
+    output = method(str_input)
+    as_expected = 'Yes' if output == expected_output else 'No'
+
+    print(f'Method:     \t{method.__name__}')
+    print(f'Description:\t{method.__doc__}')
+    print(f'Input:      \t{str_input}')
+    print(f'Output:     \t{str(output)}')
+    print(f'As expected:\t{as_expected}')
+    print()
+
+
+def test():
+    r = HangulRomanizator()
+
+    dict_test = {
+        'jaeum_syllable' : {
+            'text': '싫',
+            'function': r.jaeum,
+            'output': 's'
+        },
+        'jaeum_letter' : {
+            'text': 'ㄱ',
+            'function': r.jaeum,
+            'output': 'g'
+        },
+        'moeum_syllable' : {
+            'text': '싫',
+            'function': r.moeum,
+            'output': 'i'
+        },
+        'moeum_letter' : {
+            'text': 'ㅢ',
+            'function': r.moeum,
+            'output': 'ui'
+        },
+        'batchim_syllable' : {
+            'text': '싫',
+            'function': r.batchim,
+            'output': 'lh'
+        },
+        'batchim_letter' : {
+            'text': 'ㅎ',
+            'function': r.batchim,
+            'output': 't'
+        },
+        'is_ssangbatchim_true' : {
+            'text': 'ㅄ',
+            'function': r.is_ssangbatchim,
+            'output': True
+        },
+        'is_ssangbatchim_false' : {
+            'text': 'ㅅ',
+            'function': r.is_ssangbatchim,
+            'output': False
+        },
+        'has_ssangbatchim_true' : {
+            'text': '싫',
+            'function': r.has_ssangbatchim,
+            'output': True
+        },
+        'has_ssangbatchim_false' : {
+            'text': '는',
+            'function': r.has_ssangbatchim,
+            'output': False
+        },
+        'split_ssangbatchim' : {
+            'text': 'ㅄ',
+            'function': r.split_ssangbatchim,
+            'output': ('ㅂ', 'ㅅ')
+        },
+        'has_hangul_true' : {
+            'text': 'Butantã역',
+            'function': r.has_hangul,
+            'output': True
+        },
+        'has_hangul_false' : {
+            'text': 'Butantã',
+            'function': r.has_hangul,
+            'output': False
+        },
+        'hangul' : {
+            'text': '저는 당신이 싫어요',
+            'function': r.romanize,
+            'output': 'Jeoneun dangsini silheoyo'
+        }
+    }
+
+    print("Test of HangulRomanizator's class methods:")
+
+    for keys, values in dict_test.items():
+        call_method_test(values['function'], values['text'], values['output'])
+
 
 if __name__ == "__main__":
-    jaeum_syllable = '싫'
-    jaeum_letter = 'ㄱ'
-    moeum_syllable = '싫'
-    moeum_letter = 'ㅢ'
-    batchim_syllable = '싫'
-    batchim_letter = 'ㅎ'
-    is_ssangbatchim_true = 'ㅄ'
-    is_ssangbatchim_false= 'ㅅ'
-    has_ssangbatchim_true = '싫'
-    has_ssangbatchim_false= '는'
-    split_ssangbatchim = 'ㅄ'
-    has_hangul_true = 'Butantã역'
-    has_hangul_false = 'Butantã'
-    hangul = '저는 당신을 싫어요'
-    
-    r = Romanizator()
-    print('Test of Romanizator\'s class methods:\n')
-    print('method\t\t\tinput\t\t\toutput\n')
-    print('{0}\t{1}\t\t\t{2}'.format('jaeum():             ', jaeum_syllable, r.jaeum(jaeum_syllable)))
-    print('{0}\t{1}\t\t\t{2}'.format('jaeum():             ', jaeum_letter, r.jaeum(jaeum_letter)))
-    print('{0}\t{1}\t\t\t{2}'.format('moeum():             ', moeum_syllable, r.moeum(moeum_syllable)))
-    print('{0}\t{1}\t\t\t{2}'.format('moeum():             ', moeum_letter, r.moeum(moeum_letter)))
-    print('{0}\t{1}\t\t\t{2}'.format('batchim():           ', batchim_syllable, r.batchim(batchim_syllable)))
-    print('{0}\t{1}\t\t\t{2}'.format('batchim():           ', batchim_letter, r.batchim(batchim_letter)))
-    print('{0}\t{1}\t\t\t{2}'.format('is_ssangbatchim():   ', is_ssangbatchim_true, r.is_ssangbatchim(is_ssangbatchim_true)))
-    print('{0}\t{1}\t\t\t{2}'.format('is_ssangbatchim():   ', is_ssangbatchim_false, r.is_ssangbatchim(is_ssangbatchim_false)))
-    print('{0}\t{1}\t\t\t{2}'.format('has_ssangbatchim():   ', has_ssangbatchim_true, r.has_ssangbatchim(has_ssangbatchim_true)))
-    print('{0}\t{1}\t\t\t{2}'.format('has_ssangbatchim():   ', has_ssangbatchim_false, r.has_ssangbatchim(has_ssangbatchim_false)))
-    print('{0}\t{1}\t\t\t{2}'.format('split_ssangbatchim():', split_ssangbatchim, r.split_ssangbatchim(split_ssangbatchim)))
-    print('{0}\t{1}\t\t{2}'.format('has_hangul():        ', has_hangul_true, r.has_hangul(has_hangul_true)))
-    print('{0}\t{1}\t\t\t{2}'.format('has_hangul():        ', has_hangul_false, r.has_hangul(has_hangul_false)))
-    print('{0}\t{1}\t{2}'.format('hangul():            ', hangul, hangul))
-    print('{0}\t{1}\t{2}'.format('romanized():         ', hangul, r.romanize(hangul)))
+    test()
+
